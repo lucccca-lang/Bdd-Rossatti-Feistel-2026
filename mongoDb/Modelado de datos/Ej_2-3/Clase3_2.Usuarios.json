@@ -1,0 +1,21 @@
+[{
+  "_id": 1,
+  "nombre": "Maria",
+  "apellido": "Lopez",
+  "email": "maria@gmail.com",
+  "clave": "abc123",
+  "direcciones": [
+    {
+      "calle": "San Martin",
+      "ciudad": "Cordoba",
+      "codigo_postal": "5000",
+      "provincia": "Cordoba"
+    },
+    {
+      "calle": "Belgrano",
+      "ciudad": "Rosario",
+      "codigo_postal": "2000",
+      "provincia": "Santa Fe"
+    }
+  ]
+}]

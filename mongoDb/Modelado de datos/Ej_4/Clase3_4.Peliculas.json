@@ -1,0 +1,21 @@
+[{
+  "_id": 1,
+  "titulo": "Los Demoledores",
+  "anio": 2024,
+  "genero": "Accion",
+  "duracion": 120,
+  "actores": [
+    {
+      "nombre": "Lucas",
+      "apellido": "Shank",
+      "fecha_nacimiento": "1990-05-12",
+      "nacionalidad": "Argentina"
+    },
+    {
+      "nombre": "Guillermina",
+      "apellido": "Fernandez",
+      "fecha_nacimiento": "1992-08-20",
+      "nacionalidad": "Argentina"
+    }
+  ]
+}]

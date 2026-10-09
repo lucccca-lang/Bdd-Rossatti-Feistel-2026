@@ -1,0 +1,18 @@
+[{
+  "_id": 101,
+  "usuario_id": 1,
+  "fecha": "2026-10-09",
+  "productos": [
+    {
+      "id": 10,
+      "cantidad": 2,
+      "precio_unitario": 5000
+    },
+    {
+      "id": 11,
+      "cantidad": 1,
+      "precio_unitario": 3000
+    }
+  ],
+  "monto_total": 13000
+}]

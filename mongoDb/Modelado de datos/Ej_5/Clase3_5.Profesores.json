@@ -1,0 +1,20 @@
+[{
+  "_id": 10,
+  "nombre": "Pedro",
+  "apellido": "Gomez",
+  "email": "pedro@gmail.com",
+  "materias_id": [
+    1,
+    2
+  ]
+},
+{
+  "_id": 11,
+  "nombre": "Lucas",
+  "apellido": "Rodriguez",
+  "email": "lucas@gmail.com",
+  "materias_id": [
+    1,
+    2
+  ]
+}]

@@ -1,0 +1,26 @@
+[{
+  "_id": 1,
+  "nombre": "Ana",
+  "apellido": "Lopez",
+  "dni": 30123456,
+  "fecha_nacimiento": "1985-08-20",
+  "historia_clinica": {
+    "numero_historia": "HC001",
+    "fecha_inicio": "2024-01-10",
+    "observaciones_generales": "Sin observaciones",
+    "registros_medicos": [
+      {
+        "fecha_consulta": "2026-10-09",
+        "diagnostico": "Gripe",
+        "tratamiento": "Reposo",
+        "medico": "Dr. Perez"
+      },
+      {
+        "fecha_consulta": "2026-10-15",
+        "diagnostico": "Control",
+        "tratamiento": "Seguimiento",
+        "medico": "Dra. Gomez"
+      }
+    ]
+  }
+}]
