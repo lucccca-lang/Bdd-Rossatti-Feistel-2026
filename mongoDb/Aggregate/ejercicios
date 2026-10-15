@@ -1,0 +1,225 @@
+/*BASE DE DATOS*/
+
+db.clientes.insertMany([
+  {
+    dni: 1001,
+    nombre: "Juan",
+    apellido: "Perez",
+    edad: 20,
+    compras: [
+      {
+        id: 1,
+        fecha: "2026-10-15",
+        productos: [
+          {
+            id: 101,
+            descripcion: "Teclado",
+            precio: 10000,
+            cantidad: 2,
+            subtotal: 20000
+          },
+          {
+            id: 102,
+            descripcion: "Mouse",
+            precio: 5000,
+            cantidad: 1,
+            subtotal: 5000
+          }
+        ]
+      },
+      {
+        id: 2,
+        fecha: "2026-10-14",
+        productos: [
+          {
+            id: 101,
+            descripcion: "Teclado",
+            precio: 10000,
+            cantidad: 1,
+            subtotal: 10000
+          }
+        ]
+      },
+      {
+        id: 3,
+        fecha: "2026-10-15",
+        productos: [
+          {
+            id: 103,
+            descripcion: "Monitor",
+            precio: 80000,
+            cantidad: 1,
+            subtotal: 80000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    dni: 1002,
+    nombre: "Maria",
+    apellido: "Lopez",
+    edad: 30,
+    compras: [
+      {
+        id: 4,
+        fecha: "2026-10-15",
+        productos: [
+          {
+            id: 102,
+            descripcion: "Mouse",
+            precio: 5000,
+            cantidad: 3,
+            subtotal: 15000
+          }
+        ]
+      },
+      {
+        id: 5,
+        fecha: "2026-10-13",
+        productos: [
+          {
+            id: 103,
+            descripcion: "Monitor",
+            precio: 80000,
+            cantidad: 2,
+            subtotal: 160000
+          }
+        ]
+      }
+    ]
+  },
+  {
+    dni: 1003,
+    nombre: "Pedro",
+    apellido: "Gomez",
+    edad: 40,
+    compras: [
+      {
+        id: 6,
+        fecha: "2026-10-12",
+        productos: [
+          {
+            id: 101,
+            descripcion: "Teclado",
+            precio: 10000,
+            cantidad: 1,
+            subtotal: 10000
+          }
+        ]
+      },
+      {
+        id: 7,
+        fecha: "2026-10-15",
+        productos: [
+          {
+            id: 102,
+            descripcion: "Mouse",
+            precio: 5000,
+            cantidad: 2,
+            subtotal: 10000
+          }
+        ]
+      }
+    ]
+  }
+])
+
+/*1*/
+
+db.Clientes.aggregate([
+  {
+    $group: {
+      _id: null,
+      promedio_edad: { $avg: "$edad" }
+    }
+  }
+])
+
+/*2*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  {
+    $group: {
+      _id: {
+        id: "$compras.productos.id",
+        descripcion: "$compras.productos.descripcion"
+      },
+      total_unidades: { $sum: "$compras.productos.cantidad" }
+    }
+  }
+])
+
+
+/*4*/
+
+db.clientes.aggregate([
+  {
+    $project: {
+      nombre: 1,
+      apellido: 1,
+      cantidad_compras: { $size: "$compras" }
+    }
+  },
+  {
+    $match: {
+      cantidad_compras: { $gt: 2 }
+    }
+  }
+])
+
+/*5*/
+
+db.clientes.aggregate([
+  {
+    $project: {
+      nombre: 1,
+      apellido: 1,
+      cantidad_compras: { $size: "$compras" }
+    }
+  },
+  { $sort: { cantidad_compras: -1 } },
+  { $limit: 1 }
+])
+
+/*6*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  {
+    $group: {
+      _id: {
+        dni: "$dni",
+        id_compra: "$compras.id"
+      },
+      unidades_compra: { $sum: "$compras.productos.cantidad" }
+    }
+  },
+  {
+    $group: {
+      _id: null,
+      promedio_unidades: { $avg: "$unidades_compra" }
+    }
+  }
+])
+
+/*7*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  {
+    $group: {
+      _id: {
+        id: "$compras.productos.id",
+        descripcion: "$compras.productos.descripcion"
+      },
+      cantidad_compras: { $sum: 1 }
+    }
+  }
+])
+
+
