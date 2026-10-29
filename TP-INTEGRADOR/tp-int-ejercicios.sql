@@ -598,7 +598,10 @@ END//
 DELIMITER ;
 
 /*se prueba con el horario*/
-SELECT * FROM notificacion;
+SELECT 
+    *
+FROM
+    notificacion;
 
 /*4*/
 /*todos los dias a las 00, haga stats*/
@@ -752,3 +755,6 @@ GRANT CREATE ROUTINE, ALTER ROUTINE, EXECUTE ON ecommerce.* TO 'desarrollador';
 /*3*/
 CREATE ROLE 'admin';
 GRANT ALL PRIVILEGES ON ecommerce.* TO 'admin';
+
+create database Alarma;
+use Alarma;

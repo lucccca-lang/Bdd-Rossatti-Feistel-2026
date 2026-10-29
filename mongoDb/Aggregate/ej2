@@ -1,0 +1,131 @@
+EJERCICIO 2 AGREGGATE
+
+db.clientes.insertMany([
+  { codCliente: 1, dni: 40111222, nombre: "Facu",  apellido: "Peterdeo",     edad: 25 },
+  { codCliente: 2, dni: 38222333, nombre: "Agustin", apellido: "Feistel",     edad: 31 },
+  { codCliente: 3, dni: 42333444, nombre: "Thiago", apellido: "Andreoli", edad: 22 }
+])
+
+db.compras.insertMany([
+  { id: 1, fecha: "2025-03-10", cliente_idCliente: 1, productos: [
+      { id: 101, descripcion: "Banana",     precio: 15000,  cantidad: 2 },
+      { id: 102, descripcion: "Mouse",       precio: 8000,   cantidad: 1 } ] },
+  { id: 2, fecha: "2025-03-22", cliente_idCliente: 1, productos: [
+      { id: 103, descripcion: "Monitor",     precio: 120000, cantidad: 1 } ] },
+  { id: 3, fecha: "2025-04-05", cliente_idCliente: 2, productos: [
+      { id: 101, descripcion: "Banana",     precio: 15000,  cantidad: 1 },
+      { id: 104, descripcion: "Auriculares", precio: 20000,  cantidad: 3 },
+      { id: 102, descripcion: "Mouse",       precio: 8000,   cantidad: 1 } ] },
+  { id: 4, fecha: "2025-04-18", cliente_idCliente: 2, productos: [
+      { id: 102, descripcion: "Mouse",       precio: 8000,   cantidad: 4 } ] },
+  { id: 5, fecha: "2026-03-02", cliente_idCliente: 2, productos: [
+      { id: 103, descripcion: "Monitor",     precio: 120000, cantidad: 2 } ] },
+  { id: 6, fecha: "2026-03-15", cliente_idCliente: 3, productos: [
+      { id: 104, descripcion: "Auriculares", precio: 20000,  cantidad: 2 },
+      { id: 101, descripcion: "Banana",     precio: 15000,  cantidad: 1 } ] },
+  { id: 7, fecha: "2026-04-01", cliente_idCliente: 3, productos: [
+      { id: 102, descripcion: "Mouse",       precio: 8000,   cantidad: 2 } ] },
+  { id: 8, fecha: "2026-04-20", cliente_idCliente: 1, productos: [
+      { id: 101, descripcion: "Banana",     precio: 15000,  cantidad: 3 } ] }
+])
+
+/*1*/
+
+db.compras.aggregate([
+  { $project: { _id: 0, cliente_idCliente: 1, id: 1, fecha: 1, productos: 1 } },
+  { $sort: { cliente_idCliente: 1 } }
+])
+
+/*2*/
+
+db.compras.aggregate([
+  { $unwind: "$productos" },
+  { $group: {
+      _id: "$cliente_idCliente",
+      total: { $sum: { $multiply: ["$productos.precio", "$productos.cantidad"] } }
+  } },
+  { $lookup: { from: "clientes", localField: "_id", foreignField: "codCliente", as: "cliente" } },
+  { $unwind: "$cliente" },
+  { $project: { _id: 0, nombre: "$cliente.nombre", apellido: "$cliente.apellido", total: 1 } }
+])
+
+/*3*/
+
+db.compras.aggregate([
+  { $unwind: "$productos" },
+  { $group: {
+      _id: { compra: "$id", cliente: "$cliente_idCliente" },
+      totalCompra: { $sum: { $multiply: ["$productos.precio", "$productos.cantidad"] } }
+  } },
+  { $group: {
+      _id: "$_id.cliente",
+      masCaro: { $max: "$totalCompra" },
+      masBarato: { $min: "$totalCompra" },
+      promedio: { $avg: "$totalCompra" }
+  } },
+  { $lookup: { from: "clientes", localField: "_id", foreignField: "codCliente", as: "cliente" } },
+  { $unwind: "$cliente" },
+  { $project: { _id: 0, nombre: "$cliente.nombre", apellido: "$cliente.apellido", masCaro: 1, masBarato: 1, promedio: 1 } }
+])
+
+/*4*/
+
+db.compras.aggregate([
+  { $project: { id: 1, cliente_idCliente: 1, cantidad_productos: { $size: "$productos" } } },
+  { $sort: { cantidad_productos: -1 } },
+  { $limit: 1 },
+  { $lookup: { from: "clientes", localField: "cliente_idCliente", foreignField: "codCliente", as: "cliente" } },
+  { $unwind: "$cliente" },
+  { $project: { _id: 0, id: 1, cantidad_productos: 1, nombre: "$cliente.nombre" } }
+])
+
+/*5*/
+
+db.compras.aggregate([
+  { $group: { _id: "$cliente_idCliente", cantidad_compras: { $sum: 1 } } },
+  { $match: { cantidad_compras: { $gt: 2 } } },
+  { $lookup: { from: "clientes", localField: "_id", foreignField: "codCliente", as: "cliente" } },
+  { $unwind: "$cliente" },
+  { $project: { _id: 0, codCliente: "$_id", nombre: "$cliente.nombre", apellido: "$cliente.apellido" } }
+])
+
+/*6*/
+
+db.compras.aggregate([
+  { $unwind: "$productos" },
+  { $project: {
+      anio: { $year: { $dateFromString: { dateString: "$fecha", format: "%Y-%m-%d" } } },
+      mes: { $month: { $dateFromString: { dateString: "$fecha", format: "%Y-%m-%d" } } },
+      cantidad: "$productos.cantidad"
+  } },
+  { $group: { _id: { anio: "$anio", mes: "$mes" }, unidades: { $sum: "$cantidad" } } },
+  { $sort: { "_id.anio": 1, "_id.mes": 1 } }
+])
+
+/*7*/
+
+db.compras.aggregate([
+  { $project: {
+      cliente_idCliente: 1,
+      anio: { $year: { $dateFromString: { dateString: "$fecha", format: "%Y-%m-%d" } } },
+      mes: { $month: { $dateFromString: { dateString: "$fecha", format: "%Y-%m-%d" } } }
+  } },
+  { $group: {
+      _id: { cliente: "$cliente_idCliente", anio: "$anio", mes: "$mes" },
+      cantidad_compras: { $sum: 1 }
+  } },
+  { $sort: { "_id.cliente": 1, "_id.anio": 1, "_id.mes": 1 } }
+])
+
+/*8*/
+
+db.compras.aggregate([
+  { $unwind: "$productos" },
+  { $project: {
+      anio: { $year: { $dateFromString: { dateString: "$fecha", format: "%Y-%m-%d" } } },
+      subtotal: { $multiply: ["$productos.precio", "$productos.cantidad"] }
+  } },
+  { $group: { _id: "$anio", ganancia: { $sum: "$subtotal" } } },
+  { $sort: { ganancia: -1 } },
+  { $limit: 1 }
+])

@@ -1,0 +1,122 @@
+EJERCICIO 1 AGREGGATE
+
+db.clientes.insertMany([
+  {
+    dni: 40111222, nombre: "Facu", apellido: "Gonzaless", edad: 25,
+    compras: [
+      { id: 1, fecha: "2026-10-29", productos: [
+          { id: 101, descripcion: "Teclado", precio: 15000, cantidad: 2 },
+          { id: 102, descripcion: "Manzana", precio: 8000, cantidad: 1 } ] },
+      { id: 2, fecha: "2026-10-15", productos: [
+          { id: 103, descripcion: "Monitor", precio: 120000, cantidad: 1 } ] }
+    ]
+  },
+  {
+    dni: 38222333, nombre: "Agustin", apellido: "Valledor", edad: 31,
+    compras: [
+      { id: 3, fecha: "2026-10-29", productos: [
+          { id: 101, descripcion: "Teclado", precio: 15000, cantidad: 1 },
+          { id: 104, descripcion: "Auriculares", precio: 20000, cantidad: 3 } ] },
+      { id: 4, fecha: "2026-10-20", productos: [
+          { id: 102, descripcion: "Manzana", precio: 8000, cantidad: 4 } ] },
+      { id: 5, fecha: "2026-10-25", productos: [
+          { id: 103, descripcion: "Monitor", precio: 120000, cantidad: 2 } ] }
+    ]
+  },
+  {
+    dni: 42333444, nombre: "Lucas", apellido: "deVichenzo", edad: 22,
+    compras: [
+      { id: 6, fecha: "2026-10-10", productos: [
+          { id: 104, descripcion: "Auriculares", precio: 20000, cantidad: 2 },
+          { id: 101, descripcion: "Teclado", precio: 15000, cantidad: 1 } ] },
+      { id: 7, fecha: "2026-10-28", productos: [
+          { id: 102, descripcion: "Manzana", precio: 8000, cantidad: 2 } ] }
+    ]
+  }
+])
+
+/*1*/
+
+db.clientes.aggregate([
+  { $group: { _id: null, promedioEdad: { $avg: "$edad" } } }
+])
+
+/*2*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  { $group: {
+      _id: "$compras.productos.id",
+      descripcion: { $first: "$compras.productos.descripcion" },
+      totalUnidades: { $sum: "$compras.productos.cantidad" }
+  } }
+])
+
+/*3*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  { $group: {
+      _id: "$dni",
+      nombre: { $first: "$nombre" },
+      apellido: { $first: "$apellido" },
+      totalGastado: { $sum: { $multiply: ["$compras.productos.precio", "$compras.productos.cantidad"] } }
+  } }
+])
+
+/*4*/
+
+db.clientes.aggregate([
+  { $project: { nombre: 1, apellido: 1, cantidad_compras: { $size: "$compras" } } },
+  { $match: { cantidad_compras: { $gt: 2 } } }
+])
+
+/*5*/
+
+db.clientes.aggregate([
+  { $project: { nombre: 1, apellido: 1, cantidad_compras: { $size: "$compras" } } },
+  { $sort: { cantidad_compras: -1 } },
+  { $limit: 1 }
+])
+
+/*6*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $project: { unidades: { $sum: "$compras.productos.cantidad" } } },
+  { $group: { _id: null, promedioUnidades: { $avg: "$unidades" } } }
+])
+
+/*7*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $unwind: "$compras.productos" },
+  { $group: {
+      _id: "$compras.productos.id",
+      descripcion: { $first: "$compras.productos.descripcion" },
+      cantidad_compras: { $sum: 1 }
+  } }
+])
+
+/*8*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $match: { "compras.fecha": "2026-10-29" } },
+  { $unwind: "$compras.productos" },
+  { $group: {
+      _id: null,
+      totalHoy: { $sum: { $multiply: ["$compras.productos.precio", "$compras.productos.cantidad"] } }
+  } }
+])
+
+/*9*/
+
+db.clientes.aggregate([
+  { $unwind: "$compras" },
+  { $project: { unidades: { $sum: "$compras.productos.cantidad" } } },
+  { $group: { _id: null, minimo: { $min: "$unidades" }, maximo: { $max: "$unidades" } } }
+])
