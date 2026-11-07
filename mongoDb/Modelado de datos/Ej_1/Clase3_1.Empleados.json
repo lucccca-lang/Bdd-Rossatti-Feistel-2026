@@ -11,3 +11,27 @@
     "fecha_vencimiento": "2027-01-10"
   }
 }]
+
+db.restaurantes.insertOne({
+  _id: 1,
+  nombre: "Lo de Beto",
+  informacion: { direccion: "Av. Directorio 1832, CABA", telefono: "11 4432-7710", horarios: { dias: "mar a dom", apertura: "12:00", cierre: "00:00" }, metodos_pago: ["Efectivo", "Tarjeta"], delivery: true, reservas_online: false },
+  servicios_adicionales: ["Estacionamiento", "Catering", "Pago con QR"],
+  menu: [
+    { nombre: "Asado de tira", precio: 16800, descripcion: "con papas", categoria: "Plato principal", observacion: "a punto" },
+    { nombre: "Bife con puré", precio: 19500, descripcion: "bife de 400g", categoria: "Sin TACC", observacion: "plancha aparte" },
+    { nombre: "Flan casero", precio: 5400, descripcion: "con dulce de leche", categoria: "Postre", observacion: "porción grande" }
+  ],
+  promociones: [
+    { nombre: "Descuento jubilados", porcentaje: 15, fecha_inicio: "2026-01-01", fecha_fin: "2026-12-31" },
+    { nombre: "Martes de parrillada", porcentaje: 10, fecha_inicio: "2026-10-01", fecha_fin: "2026-12-15" },
+    { nombre: "Verano 2026", porcentaje: 20, fecha_inicio: "2026-01-05", fecha_fin: "2026-03-01" }
+  ],
+  resenias: [
+    { mail: "lucas.benitez88@gmail.com", calificacion: 4, comentario: "muy rico" },
+    { mail: "gonzaq_77@yahoo.com.ar", calificacion: 3, comentario: "tardaron mucho" }
+  ],
+  eventos_especiales: [
+    { nombre: "Noche de asado", descripcion: "menú cerrado", fecha: "2026-11-14", horario: "21:00", requiere_reserva: true }
+  ]
+})

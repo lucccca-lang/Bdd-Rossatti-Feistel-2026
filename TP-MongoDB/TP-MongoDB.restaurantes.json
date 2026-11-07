@@ -1,0 +1,557 @@
+[{
+  "_id": 1,
+  "nombre": "Lo de Beto",
+  "informacion": {
+    "direccion": "Albarellos 2345",
+    "telefono": "11 4432-7710",
+    "horarios": {
+      "dias": "mar a dom",
+      "apertura": "12:00",
+      "cierre": "00:00"
+    },
+    "metodos_pago": [
+      "Efectivo",
+      "Tarjeta"
+    ],
+    "delivery": true,
+    "reservas_online": false
+  },
+  "servicios_adicionales": [
+    "Estacionamiento",
+    "Catering",
+    "Pago con QR"
+  ],
+  "menu": [
+    {
+      "nombre": "Asado",
+      "precio": 16800,
+      "descripcion": "con papas",
+      "categoria": "Plato principal",
+      "observacion": "a punto"
+    },
+    {
+      "nombre": "Bife con puré",
+      "precio": 19500,
+      "descripcion": "bife de 400g",
+      "categoria": "Sin TACC",
+      "observacion": "plancha aparte"
+    },
+    {
+      "nombre": "Flan casero",
+      "precio": 5400,
+      "descripcion": "con dulce de leche",
+      "categoria": "Postre",
+      "observacion": "porción grande"
+    }
+  ],
+  "promociones": [
+    {
+      "nombre": "Descuento jubilados",
+      "porcentaje": 15,
+      "fecha_inicio": "2026-01-01",
+      "fecha_fin": "2026-12-31"
+    },
+    {
+      "nombre": "Martes de parrillada",
+      "porcentaje": 10,
+      "fecha_inicio": "2026-10-01",
+      "fecha_fin": "2026-12-15"
+    },
+    {
+      "nombre": "Verano 2026",
+      "porcentaje": 20,
+      "fecha_inicio": "2026-01-05",
+      "fecha_fin": "2026-03-01"
+    }
+  ],
+  "resenias": [
+    {
+      "mail": "lucca.rossatti@gmail.com",
+      "calificacion": 4,
+      "comentario": "muy rico"
+    },
+    {
+      "mail": "facundo.feistel@gmail.com",
+      "calificacion": 3,
+      "comentario": "tardaron mucho"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Noche de asado",
+      "descripcion": "menú cerrado",
+      "fecha": "2026-11-14",
+      "horario": "21:00",
+      "requiere_reserva": true
+    }
+  ]
+},
+{
+  "_id": 2,
+  "nombre": "Bodegón adreoli",
+  "informacion": {
+    "direccion": "Libertador 2500, Saavedra",
+    "telefono": "11 4253-9081",
+    "horarios": {
+      "dias": "lun a sab",
+      "apertura": "11:00",
+      "cierre": "23:30"
+    },
+    "metodos_pago": [
+      "Efectivo",
+      "Transferencia"
+    ],
+    "delivery": true,
+    "reservas_online": true
+  },
+  "servicios_adicionales": [
+    "Pago con QR",
+    "Wifi",
+    "Estacionamiento"
+  ],
+  "menu": [
+    {
+      "nombre": "Milanesa napolitana",
+      "precio": 12900,
+      "descripcion": "con fritas",
+      "categoria": "Plato principal",
+      "observacion": "para dos"
+    },
+    {
+      "nombre": "Tortilla de papas",
+      "precio": 6800,
+      "descripcion": "con cebolla",
+      "categoria": "Vegetariano",
+      "observacion": "caliente"
+    },
+    {
+      "nombre": "Vigilante",
+      "precio": 4900,
+      "descripcion": "queso y batata",
+      "categoria": "Postre",
+      "observacion": "clásico"
+    }
+  ],
+  "promociones": [
+    {
+      "nombre": "Menú ejecutivo",
+      "porcentaje": 25,
+      "fecha_inicio": "2026-10-15",
+      "fecha_fin": "2026-11-30"
+    },
+    {
+      "nombre": "Descuento estudiantes",
+      "porcentaje": 10,
+      "fecha_inicio": "2026-03-01",
+      "fecha_fin": "2026-12-20"
+    }
+  ],
+  "resenias": [
+    {
+      "mail": "agustin.valledor122@gmail.com",
+      "calificacion": 3,
+      "comentario": "había mucho ruido"
+    },
+    {
+      "mail": "thiago.andreoli@gmail.com",
+      "calificacion": 4,
+      "comentario": "milanesas enormes"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Baile",
+      "descripcion": "clase y baile",
+      "fecha": "2026-11-12",
+      "horario": "20:00",
+      "requiere_reserva": false
+    }
+  ]
+},
+{
+  "_id": 3,
+  "nombre": "Sushi Hermanos Chang",
+  "informacion": {
+    "direccion": "Norberto 220",
+    "telefono": "11 3434-5748",
+    "horarios": {
+      "dias": "mar a dom",
+      "apertura": "19:00",
+      "cierre": "00:30"
+    },
+    "metodos_pago": [
+      "Tarjeta",
+      "Mercado Pago"
+    ],
+    "delivery": true,
+    "reservas_online": true
+  },
+  "servicios_adicionales": [
+    "Pago con QR",
+    "Catering",
+    "Wifi"
+  ],
+  "menu": [
+    {
+      "nombre": "Combinado 20 piezas",
+      "precio": 21500,
+      "descripcion": "rolls variados",
+      "categoria": "Plato principal",
+      "observacion": "con wasabi"
+    },
+    {
+      "nombre": "Sashimi de salmón",
+      "precio": 17800,
+      "descripcion": "10 cortes",
+      "categoria": "Sin TACC",
+      "observacion": "sin salsa de soja"
+    },
+    {
+      "nombre": "Helado de té verde",
+      "precio": 5900,
+      "descripcion": "dos bochas",
+      "categoria": "Postre",
+      "observacion": "casero"
+    }
+  ],
+  "promociones": [
+    {
+      "nombre": "Dos por uno",
+      "porcentaje": 30,
+      "fecha_inicio": "2026-11-01",
+      "fecha_fin": "2026-11-15"
+    },
+    {
+      "nombre": "Aniversario",
+      "porcentaje": 20,
+      "fecha_inicio": "2026-05-01",
+      "fecha_fin": "2026-05-31"
+    },
+    {
+      "nombre": "Happy hour",
+      "porcentaje": 10,
+      "fecha_inicio": "2026-06-01",
+      "fecha_fin": "2026-12-31"
+    }
+  ],
+  "resenias": [
+    {
+      "mail": "juli.farias@gmail.com",
+      "calificacion": 5,
+      "comentario": "salmón fresquísimo"
+    },
+    {
+      "mail": "facu.devi@gmail.com",
+      "calificacion": 4,
+      "comentario": "caro pero bueno"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Degustación de sakes",
+      "descripcion": "4 sakes con piezas",
+      "fecha": "2026-11-20",
+      "horario": "20:30",
+      "requiere_reserva": true
+    },
+    {
+      "nombre": "Clase de rolls",
+      "descripcion": "armás tus rolls",
+      "fecha": "2026-11-09",
+      "horario": "18:00",
+      "requiere_reserva": true
+    }
+  ]
+},
+{
+  "_id": 4,
+  "nombre": "Pastas Manchini",
+  "informacion": {
+    "direccion": "Belgrano 275",
+    "telefono": "11 8888-2390",
+    "horarios": {
+      "dias": "todos los días",
+      "apertura": "12:00",
+      "cierre": "23:00"
+    },
+    "metodos_pago": [
+      "Efectivo",
+      "Tarjeta"
+    ],
+    "delivery": false,
+    "reservas_online": true
+  },
+  "servicios_adicionales": [
+    "Espacio para eventos privados",
+    "Pago con QR",
+    "Estacionamiento"
+  ],
+  "menu": [
+    {
+      "nombre": "Ñoquis con estofado",
+      "precio": 11200,
+      "descripcion": "ñoquis caseros",
+      "categoria": "Plato principal",
+      "observacion": "porción grande"
+    },
+    {
+      "nombre": "Sorrentinos de calabaza",
+      "precio": 12600,
+      "descripcion": "con salsa rosa",
+      "categoria": "Vegetariano",
+      "observacion": "se piden con crema"
+    },
+    {
+      "nombre": "Tiramisú",
+      "precio": 5800,
+      "descripcion": "con café",
+      "categoria": "Postre",
+      "observacion": "tiene alcohol"
+    }
+  ],
+  "promociones": [
+    {
+      "nombre": "Domingo de ñoquis",
+      "porcentaje": 10,
+      "fecha_inicio": "2026-08-01",
+      "fecha_fin": "2026-12-31"
+    }
+  ],
+  "resenias": [
+    {
+      "mail": "romina.sosa@gmail.com",
+      "calificacion": 5,
+      "comentario": "pasta casera de verdad"
+    },
+    {
+      "mail": "matias.patti@gmail.com",
+      "calificacion": 5,
+      "comentario": "los sorrentinos son lo mejor"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Clase de pasta fresca",
+      "descripcion": "se amasa en vivo",
+      "fecha": "2026-11-28",
+      "horario": "17:00",
+      "requiere_reserva": true
+    }
+  ]
+},
+{
+  "_id": 5,
+  "nombre": "Cervecería Tres Cuervos",
+  "informacion": {
+    "direccion": "Güemes 310, Mar del Plata",
+    "telefono": "11 4921-3347",
+    "horarios": {
+      "dias": "mie a dom",
+      "apertura": "18:00",
+      "cierre": "02:00"
+    },
+    "metodos_pago": [
+      "Efectivo",
+      "Tarjeta"
+    ],
+    "delivery": false,
+    "reservas_online": false
+  },
+  "servicios_adicionales": [
+    "Shows en vivo",
+    "Wifi",
+    "Pago con QR",
+    "Espacio para eventos privados"
+  ],
+  "menu": [
+    {
+      "nombre": "Tabla de fiambres",
+      "precio": 15900,
+      "descripcion": "fiambres y quesos",
+      "categoria": "Plato principal",
+      "observacion": "para 3 o 4"
+    },
+    {
+      "nombre": "Brownie con helado",
+      "precio": 6100,
+      "descripcion": "tibio",
+      "categoria": "Postre",
+      "observacion": "tiene nueces"
+    },
+    {
+      "nombre": "IPA 500 ml",
+      "precio": 5200,
+      "descripcion": "cerveza propia",
+      "categoria": "Bebida",
+      "observacion": "mayores de 18"
+    }
+  ],
+  "promociones": [],
+  "resenias": [
+    {
+      "mail": "agus.maidana@gmail.com",
+      "calificacion": 3,
+      "comentario": "la comida tardó"
+    },
+    {
+      "mail": "juli.ferez@gmail.com",
+      "calificacion": 3,
+      "comentario": "la banda muy buena"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Música en vivo",
+      "descripcion": "bandas de rock",
+      "fecha": "2026-11-13",
+      "horario": "22:00",
+      "requiere_reserva": false
+    },
+    {
+      "nombre": "Música en vivo",
+      "descripcion": "reggaeton fest",
+      "fecha": "2026-10-30",
+      "horario": "22:30",
+      "requiere_reserva": false
+    }
+  ]
+},
+{
+  "_id": 6,
+  "nombre": "Cocina Vegana",
+  "informacion": {
+    "direccion": "Perú 535, San Telmo",
+    "telefono": "11 5278-4402",
+    "horarios": {
+      "dias": "lun a sab",
+      "apertura": "09:00",
+      "cierre": "21:00"
+    },
+    "metodos_pago": [
+      "Efectivo",
+      "Mercado Pago"
+    ],
+    "delivery": true,
+    "reservas_online": false
+  },
+  "servicios_adicionales": [
+    "Opciones sin TACC",
+    "Opciones veganas",
+    "Wifi",
+    "Pago con QR"
+  ],
+  "menu": [
+    {
+      "nombre": "Hamburguesa de lentejas",
+      "precio": 10400,
+      "descripcion": "con rúcula y tomate",
+      "categoria": "Vegano",
+      "observacion": "viene con papas"
+    },
+    {
+      "nombre": "Wok de vegetales",
+      "precio": 11800,
+      "descripcion": "con arroz yamaní",
+      "categoria": "Sin TACC",
+      "observacion": "sin soja"
+    },
+    {
+      "nombre": "Licuado de banana",
+      "precio": 4100,
+      "descripcion": "con avena",
+      "categoria": "Bebida",
+      "observacion": "sin azúcar"
+    }
+  ],
+  "promociones": [
+    {
+      "nombre": "Primera visita",
+      "porcentaje": 12,
+      "fecha_inicio": "2026-09-01",
+      "fecha_fin": "2026-12-31"
+    }
+  ],
+  "resenias": [
+    {
+      "mail": "mica.fernandez@gmail.com",
+      "calificacion": 4,
+      "comentario": "la hamburguesa está buenísima"
+    },
+    {
+      "mail": "luana.lopez@gmail.com",
+      "calificacion": 4,
+      "comentario": "soy celíaco y comí tranqui"
+    }
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Taller de cocina vegetal",
+      "descripcion": "3 recetas con legumbres",
+      "fecha": "2026-11-22",
+      "horario": "11:00",
+      "requiere_reserva": true
+    }
+  ]
+},
+{
+  "_id": 7,
+  "nombre": "Del Puerto",
+  "informacion": {
+    "direccion": "Av. Costanera 5500",
+    "telefono": "11 4451-1893",
+    "horarios": {
+      "dias": "jue a lun",
+      "apertura": "20:00",
+      "cierre": "01:00"
+    },
+    "metodos_pago": [
+      "Efectivo"
+    ],
+    "delivery": false,
+    "reservas_online": true
+  },
+  "servicios_adicionales": [
+    "Estacionamiento",
+    "Shows en vivo"
+  ],
+  "eventos_especiales": [
+    {
+      "nombre": "Música en vivo",
+      "descripcion": "folklore",
+      "fecha": "2026-12-05",
+      "horario": "21:30",
+      "requiere_reserva": false
+    }
+  ]
+},
+{
+  "_id": 8,
+  "nombre": "Parador Ruta 9",
+  "informacion": {
+    "direccion": "Ruta 9 km 612",
+    "telefono": "11 5190-7706",
+    "horarios": {
+      "dias": "todos los días",
+      "apertura": "07:00",
+      "cierre": "23:00"
+    },
+    "metodos_pago": [
+      "Efectivo"
+    ],
+    "delivery": false,
+    "reservas_online": false
+  },
+  "servicios_adicionales": [
+    "Estacionamiento"
+  ],
+  "menu": [],
+  "promociones": [],
+  "resenias": [
+    {
+      "mail": "ricardo.salvatierra@gmail.com",
+      "calificacion": 2,
+      "comentario": "sirve para parar de paso e ir al banio"
+    }
+  ],
+  "eventos_especiales": []
+}]

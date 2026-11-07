@@ -1,0 +1,175 @@
+EJERCICIOS TP MONGODB
+
+/*3*/
+
+db.restaurantes.updateMany(
+  {},
+  { $set: { ultima_actualizacion: new Date() } }
+)
+
+/*4*/
+
+db.restaurantes.find(
+  { "promociones.porcentaje": 10 },
+  { nombre: 1, _id: 0 }
+)
+
+/*5*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$resenias" },
+  { $group: { _id: "$nombre", promedio_calificacion: { $avg: "$resenias.calificacion" } } }
+])
+
+/*6*/
+
+db.restaurantes.updateMany(
+  { $or: [ { "informacion.delivery": true }, { "informacion.reservas_online": true } ] },
+  { $set: { "informacion.horarios.apertura": "11:30", ultima_actualizacion: new Date() } }
+)
+
+/*7*/
+
+db.restaurantes.find(
+  { "eventos_especiales.nombre": "Música en vivo" },
+  { nombre: 1, "informacion.direccion": 1, "informacion.telefono": 1, _id: 0 }
+)
+
+/*8*/
+
+db.restaurantes.updateMany(
+  { nombre: "Pastas Manchini" },
+  {
+    $push: { promociones: { nombre: "Primavera 2026", porcentaje: 15, fecha_inicio: "2026-09-10", fecha_fin: "2026-10-10" } },
+    $set: { ultima_actualizacion: new Date() }
+  }
+)
+
+/*9*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$promociones" },
+  { $addFields: {
+      inicio: { $dateFromString: { dateString: "$promociones.fecha_inicio", format: "%Y-%m-%d" } },
+      fin: { $dateFromString: { dateString: "$promociones.fecha_fin", format: "%Y-%m-%d" } }
+  } },
+  { $match: { inicio: { $lte: new Date() }, fin: { $gte: new Date() } } },
+  { $sort: { "promociones.porcentaje": -1 } },
+  { $limit: 1 },
+  { $project: { _id: 0, nombre: 1, servicios_adicionales: 1, menu: 1 } }
+])
+
+/*10*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$resenias" },
+  { $group: { _id: "$nombre", promedio: { $avg: "$resenias.calificacion" } } },
+  { $sort: { promedio: -1 } },
+  { $limit: 3 },
+  { $project: { _id: 0, nombre: "$_id" } }
+])
+
+/*11*/
+
+db.restaurantes.find({
+  $or: [
+    { "promociones.nombre": "Descuento jubilados" },
+    { "promociones.nombre": "Descuento estudiantes" }
+  ]
+})
+
+/*12*/
+
+db.restaurantes.aggregate([
+  { $match: { "informacion.delivery": true, "informacion.reservas_online": true } },
+  { $unwind: "$promociones" },
+  { $addFields: {
+      inicio: { $dateFromString: { dateString: "$promociones.fecha_inicio", format: "%Y-%m-%d" } },
+      fin: { $dateFromString: { dateString: "$promociones.fecha_fin", format: "%Y-%m-%d" } }
+  } },
+  { $match: { "promociones.porcentaje": { $gt: 20 }, inicio: { $lte: new Date() }, fin: { $gte: new Date() } } },
+  { $group: { _id: "$nombre" } }
+])
+
+/*13*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$servicios_adicionales" },
+  { $group: { _id: "$servicios_adicionales", cantidad: { $sum: 1 } } },
+  { $sort: { cantidad: -1 } },
+  { $limit: 3 }
+])
+
+/*14*/
+
+db.restaurantes.find(
+  { $or: [ { promociones: { $exists: false } }, { promociones: { $size: 0 } } ] },
+  { nombre: 1, "informacion.direccion": 1, "informacion.telefono": 1, _id: 0 }
+)
+
+/*15*/
+
+db.restaurantes.aggregate([
+  { $match: { promociones: { $exists: true } } },
+  { $project: {
+      _id: 0,
+      nombre: 1,
+      direccion: "$informacion.direccion",
+      telefono: "$informacion.telefono",
+      cantidad_promociones: { $size: "$promociones" }
+  } },
+  { $match: { cantidad_promociones: { $gte: 3 } } }
+])
+
+/*16*/
+
+db.restaurantes.find(
+  { "menu.categoria": "Sin TACC" },
+  { nombre: 1, _id: 0 }
+)
+
+/*17*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$promociones" },
+  { $addFields: {
+      inicio: { $dateFromString: { dateString: "$promociones.fecha_inicio", format: "%Y-%m-%d" } },
+      fin: { $dateFromString: { dateString: "$promociones.fecha_fin", format: "%Y-%m-%d" } }
+  } },
+  { $match: { inicio: { $lte: new Date() }, fin: { $gte: new Date() } } },
+  { $group: { _id: "$nombre", promociones_vigentes: { $push: "$promociones" } } }
+])
+
+/*18*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$eventos_especiales" },
+  { $addFields: {
+      fecha_evento: { $dateFromString: { dateString: "$eventos_especiales.fecha", format: "%Y-%m-%d" } }
+  } },
+  { $match: { fecha_evento: { $gte: new Date() } } },
+  { $sort: { fecha_evento: 1 } },
+  { $group: { _id: "$nombre", proximo_evento: { $first: "$eventos_especiales" } } }
+])
+
+/*19*/
+
+db.restaurantes.deleteMany({
+  $or: [ { menu: { $exists: false } }, { menu: { $size: 0 } } ]
+})
+
+/*20*/
+
+db.restaurantes.aggregate([
+  { $unwind: "$menu" },
+  { $sort: { "menu.precio": -1 } },
+  { $group: {
+      _id: "$nombre",
+      precio_promedio: { $avg: "$menu.precio" },
+      plato_mas_caro: { $first: "$menu.nombre" },
+      precio_mas_caro: { $first: "$menu.precio" },
+      plato_mas_barato: { $last: "$menu.nombre" },
+      precio_mas_barato: { $last: "$menu.precio" }
+  } }
+])
+
